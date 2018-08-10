@@ -13,9 +13,9 @@ public class StudentList {
         this.students = new ArrayList<Student>();
     }
 
-    public String toString(){
+    public String toString() {
         StringBuilder sb = new StringBuilder();
-        for(Student st : students){
+        for (Student st : students) {
             sb.append(st.toString());
         }
         return sb.toString();

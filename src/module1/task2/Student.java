@@ -7,15 +7,15 @@ public class Student {
     private ArrayList<Integer> marks;
     private double scholarship;
 
-    public Student(String fio){
+    public Student(String fio) {
         this.fio = fio;
     }
 
-    public Student(ArrayList<Integer> marks){
+    public Student(ArrayList<Integer> marks) {
         this.marks = marks;
     }
 
-    public Student(String fio, ArrayList<Integer> marks){
+    public Student(String fio, ArrayList<Integer> marks) {
         this.fio = fio;
         this.marks = marks;
     }
@@ -44,13 +44,11 @@ public class Student {
         this.scholarship = scholarship;
     }
 
-    public String toString(){
+    public String toString() {
         return "Студент: " + fio + '\n' +
                 "Оценки: " + marks + "; " + "Стипендия: " + getScholarship();
 
     }
-
-
 
 
 }
