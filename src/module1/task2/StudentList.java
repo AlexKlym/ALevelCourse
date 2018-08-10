@@ -1,9 +1,10 @@
 package module1.task2;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class StudentList {
-    private ArrayList<Student> students;
+    private List<Student> students;
 
     public StudentList(ArrayList<Student> students) {
         this.students = students;
@@ -11,7 +12,7 @@ public class StudentList {
 
     public StudentList() {
         this.students = new ArrayList<Student>();
-    }
+}
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -21,7 +22,7 @@ public class StudentList {
         return sb.toString();
     }
 
-    public void addStudent(String fio, ArrayList<Integer> newmarks) {
+    public void addStudent(String fio, List<Integer> newmarks) {
         for (Student s : students) {
             if (fio.equals(s.getFio())) {
                 throw new IllegalArgumentException("Такой студент уже есть!");

@@ -1,6 +1,7 @@
 package module1.task2;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -14,8 +15,13 @@ public class Main {
 
         while (true) {
             System.out.println("Введите ФИО студента или end для завершения: ");
-            String name = scan.nextLine();
-            ArrayList<Integer> marks = new ArrayList<>();
+            String name;
+            do {
+                name = scan.nextLine();
+            } while (name.isEmpty());
+            if ("end".equals(name))
+                break;
+            List<Integer> marks = new ArrayList<>();
             System.out.println("Введите оценки студента: ");
             for (int i = 0; i < 5; i++) {
                 int mark = scan.nextInt();
@@ -25,8 +31,6 @@ public class Main {
                 marks.add(mark);
             }
             studen.addStudent(name, marks);
-            if (name.equals("end"))
-                break;
         }
         studen.count();
         System.out.println(studen.toString());
