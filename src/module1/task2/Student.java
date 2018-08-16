@@ -1,21 +1,22 @@
 package module1.task2;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Student {
     private String fio;
-    private ArrayList<Integer> marks;
+    private List<Integer> marks;
     private double scholarship;
 
     public Student(String fio) {
         this.fio = fio;
     }
 
-    public Student(ArrayList<Integer> marks) {
+    public Student(List<Integer> marks) {
         this.marks = marks;
     }
 
-    public Student(String fio, ArrayList<Integer> marks) {
+    public Student(String fio, List<Integer> marks) {
         this.fio = fio;
         this.marks = marks;
     }
@@ -28,7 +29,7 @@ public class Student {
         this.fio = fio;
     }
 
-    public ArrayList<Integer> getMarks() {
+    public List<Integer> getMarks() {
         return marks;
     }
 
