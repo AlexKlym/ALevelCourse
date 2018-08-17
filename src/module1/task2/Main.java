@@ -32,6 +32,7 @@ public class Main {
             }
             studen.addStudent(name, marks);
         }
+
         studen.count();
         System.out.println(studen.toString());
 

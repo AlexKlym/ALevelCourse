@@ -33,7 +33,7 @@ public class Student {
         return marks;
     }
 
-    public void setMarks(ArrayList<Integer> marks) {
+    public void setMarks(List<Integer> marks) {
         this.marks = marks;
     }
 
@@ -46,8 +46,8 @@ public class Student {
     }
 
     public String toString() {
-        return "Студент: " + fio + '\n' +
-                "Оценки: " + marks + "; " + "Стипендия: " + getScholarship();
+        return "Студент: " + getFio() + '\n' +
+                "Оценки: " + getMarks() + "; " + "Стипендия: " + getScholarship();
 
     }
 
