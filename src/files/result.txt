@@ -1,0 +1,80 @@
+You've got 18 folders and 61 files 
+|+++files
+   |+++result.txt
+   |+++Text.txt
+|+++hometask
+   |+++arithmeticprogression
+      |+++ArithmeticProgression.java
+      |+++Main.java
+      |+++ProgressionConfigurationException.java
+   |+++hangman
+      |+++HiddenWord.java
+   |+++hometask1
+      |+++HelloWorld.java
+   |+++hometask2
+      |+++NameInput.java
+      |+++NumberN.java
+      |+++Numbers.java
+   |+++hometask3
+      |+++Array.java
+      |+++Fibbonaci.java
+      |+++Fibbonaci1.java
+      |+++NodNok.java
+   |+++hometask_io
+      |+++Demo.java
+      |+++InputOutput.java
+      |+++NewInputOutput.java
+   |+++hometask_oop
+      |+++ContractStudent.java
+      |+++Group.java
+      |+++Student.java
+   |+++hometask_oop_2
+      |+++Iron.java
+      |+++Main.java
+      |+++Oxygen.java
+      |+++State.java
+      |+++Sub.java
+      |+++Substance.java
+      |+++Water.java
+   |+++house_for_animals
+      |+++Animal.java
+      |+++Cat.java
+      |+++Desman.java
+      |+++Dog.java
+      |+++Hamster.java
+      |+++House.java
+      |+++Main.java
+      |+++PetList.java
+|+++module1
+   |+++task1
+      |+++Cargo.java
+      |+++Cities.java
+      |+++Locomotive.java
+      |+++Main.java
+      |+++Passengers1.java
+      |+++Passengers2.java
+      |+++Wagon.java
+   |+++task2
+      |+++Main.java
+      |+++Student.java
+      |+++StudentList.java
+|+++practice1
+   |+++Task1.java
+   |+++Task2.java
+   |+++Task3.java
+   |+++Task4.java
+|+++practice2
+   |+++Car.java
+   |+++City.java
+   |+++Deliver.java
+   |+++Main.java
+   |+++Package.java
+   |+++Plane.java
+   |+++Train.java
+   |+++Transport.java
+|+++practice3
+   |+++Main.java
+   |+++SinglyLinkedList.java
+|+++practice4
+   |+++Demo.java
+   |+++TreeCount.java
