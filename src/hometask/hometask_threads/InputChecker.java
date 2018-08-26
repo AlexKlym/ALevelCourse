@@ -41,8 +41,11 @@ public class InputChecker implements Runnable {
 
     private void write2file() {
         try {
-            Files.write(Paths.get("output.txt"), currentInput.getBytes());
-            previousInput = currentInput;
+            if(!newString.equals("quit")){
+                Files.write(Paths.get("output.txt"), currentInput.getBytes());
+                previousInput = currentInput;
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
