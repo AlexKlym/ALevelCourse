@@ -13,6 +13,7 @@ public class Demo {
         Count count = new Count();
         count.result(folder, directory);
 
+
     }
 }
 
