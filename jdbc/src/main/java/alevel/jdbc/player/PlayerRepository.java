@@ -61,7 +61,25 @@ public final class PlayerRepository implements Repository<Player, Long> {
 
     @Override
     public Player get(Long aLong) throws StorageException {
-        return null;
+        Player player = null;
+        String sql = "SELECT players.id id, players.nickname nickname, ranks.name player_rank, players.score score " +
+                "FROM players INNER JOIN ranks " +
+                "ON players.score >= lower_t AND players.score < upper_t AND players.id=?";
+        try (PreparedStatement statement = connectionSupplier.get().prepareStatement(sql)) {
+            statement.setLong(1, aLong);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                player = new Player(
+                        resultSet.getLong("id"),
+                        resultSet.getString("nickname"),
+                        resultSet.getString("player_rank"),
+                        resultSet.getLong("score")
+                );
+            }
+            return player;
+        } catch (SQLException e) {
+            throw new StorageException(e);
+        }
     }
 
 
@@ -86,6 +104,7 @@ public final class PlayerRepository implements Repository<Player, Long> {
             throw new StorageException(e);
         }
     }
+
 
     @Override
     public void delete(Player entity) throws StorageException {

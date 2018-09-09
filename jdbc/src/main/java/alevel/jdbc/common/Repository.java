@@ -1,5 +1,6 @@
 package alevel.jdbc.common;
 
+
 import java.util.List;
 
 public interface Repository<T, ID> {
