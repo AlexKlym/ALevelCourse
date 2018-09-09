@@ -86,7 +86,7 @@ public final class PlayerRepository implements Repository<Player, Long> {
     public List<Player> getPlayer(long num) throws StorageException {
         String sql = "SELECT players.id id, players.nickname nickname, ranks.name player_rank, players.score score " +
                 "FROM players INNER JOIN ranks " +
-                "ON players.score >= lower_t AND players.score < upper_t AND players.id=?";
+                "ON players.score >= lower_t AND players.score < upper_t WHERE players.id=?";
         try (PreparedStatement statement = connectionSupplier.get().prepareStatement(sql)) {
             statement.setLong(1, num);
             ResultSet resultSet = statement.executeQuery();
