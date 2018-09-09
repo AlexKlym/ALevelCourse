@@ -57,7 +57,7 @@ public class Count {
 
         traverse(folder, 0);
         System.out.print("You've got " + getFolderCount() + " folders");
-        System.out.print(" and " + getFileCount() + " files \n");
+        System.out.print(" and " + getFileCount() + "files \n");
         System.out.print(s);
         System.out.println(sb.toString());
 

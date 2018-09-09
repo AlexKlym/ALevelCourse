@@ -68,7 +68,7 @@ public class TreeCount {
         Files.write(path, "".getBytes());
         countFiles(folder);
         Files.write(path, ("You've got " + getFolderCount() + " folders").getBytes(), StandardOpenOption.APPEND);
-        Files.write(path, (" and " + getFileCount() + " files \n").getBytes(), StandardOpenOption.APPEND);
+        Files.write(path, (" and " + getFileCount() + "files \n").getBytes(), StandardOpenOption.APPEND);
 
         StringBuilder out = new StringBuilder("|+++");
         printTree(folder, out);
