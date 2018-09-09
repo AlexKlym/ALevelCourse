@@ -69,11 +69,11 @@ public final class PlayerRepository implements Repository<Player, Long> {
         String sql = "SELECT players.id id, players.nickname nickname, ranks.name player_rank, players.score score " +
                 "FROM players INNER JOIN ranks " +
                 "ON players.score >= lower_t AND players.score < upper_t AND players.id=?";
-        try (PreparedStatement statement = connectionSupplier.get().prepareStatement(sql)){
+        try (PreparedStatement statement = connectionSupplier.get().prepareStatement(sql)) {
             statement.setLong(1, num);
             ResultSet resultSet = statement.executeQuery();
             List<Player> players = new LinkedList<>();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 players.add(new Player(
                         resultSet.getLong("id"),
                         resultSet.getString("nickname"),
@@ -81,8 +81,8 @@ public final class PlayerRepository implements Repository<Player, Long> {
                         resultSet.getLong("score")
                 ));
             }
-            return  players;
-        }catch (SQLException e){
+            return players;
+        } catch (SQLException e) {
             throw new StorageException(e);
         }
     }

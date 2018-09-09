@@ -1,4 +1,5 @@
 package alevel.jdbc.common;
+
 import java.sql.Connection;
 import java.util.function.Supplier;
 

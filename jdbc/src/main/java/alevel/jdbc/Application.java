@@ -20,14 +20,14 @@ public final class Application {
     public static void main(String[] args) {
         Properties connectionProps = new Properties();
 
-        try(InputStream props = Application.class.getResourceAsStream("/datasource.properties")){
+        try (InputStream props = Application.class.getResourceAsStream("/datasource.properties")) {
             connectionProps.load(props);
-        }catch (IOException e){
+        } catch (IOException e) {
             panic(e);
         }
 
         String url = connectionProps.getProperty("url");
-        try(Connection connection = DriverManager.getConnection(url, connectionProps)){
+        try (Connection connection = DriverManager.getConnection(url, connectionProps)) {
             Supplier<Connection> connectionSupplier = new SingleConnectionPool(connection);
             PlayerRepository playerRepository = new PlayerRepository(connectionSupplier);
             for (String playerName : inputPlayerNames()) {
@@ -41,20 +41,19 @@ public final class Application {
         }
     }
 
-   private static List<String> inputPlayerNames() {
+    private static List<String> inputPlayerNames() {
         System.out.println("Input player names:");
         Scanner scanner = new Scanner(System.in);
         List<String> names = new LinkedList<>();
-       String name;
+        String name;
         while (!(name = scanner.nextLine()).isEmpty()) {
             names.add(name);
         }
         return names;
-   }
+    }
 
 
-
-    public static void panic(Throwable e){
+    public static void panic(Throwable e) {
         e.printStackTrace();
         System.exit(1);
     }
