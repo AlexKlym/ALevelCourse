@@ -116,4 +116,5 @@ public final class PlayerRepository implements Repository<Player, Long> {
             throw new StorageException(e);
         }
     }
+
 }

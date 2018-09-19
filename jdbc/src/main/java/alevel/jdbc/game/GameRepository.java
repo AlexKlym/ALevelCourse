@@ -18,92 +18,102 @@ public final class GameRepository implements Repository<Game, Long> {
         this.connectionSupplier = connectionSupplier;
     }
 
-
     @Override
     public void save(Game entity) throws StorageException {
-        long id_winner = entity.getWinnerId();
-        long score = entity.getScore();
-        String sql = "INSERT INTO games (id_winner, score) VALUE (?, ?)";
-        try (PreparedStatement statement = connectionSupplier.get().prepareStatement(sql)) {
-            statement.setLong(1, id_winner);
-            statement.setLong(2, score);
+        Connection connection = connectionSupplier.get();
+        try {
+            //get initial autocommit property
+            boolean autoCommit = connection.getAutoCommit();
+
+            try {
+                connection.setAutoCommit(false);
+
+                String saveGame = "INSERT INTO games (id_winner, score) VALUES (?, ?)";
+                try (PreparedStatement preparedStatement = connection.prepareStatement(saveGame)) {
+                    preparedStatement.setLong(1, entity.getWinnerId());
+                    preparedStatement.setLong(2, entity.getScore());
+                    preparedStatement.executeUpdate();
+                }
+
+                String addPointsToPlayer = "UPDATE players SET score = score + ? WHERE id = ?";
+                try (PreparedStatement preparedStatement = connection.prepareStatement(addPointsToPlayer)) {
+                    preparedStatement.setLong(1, entity.getScore());
+                    preparedStatement.setLong(2, entity.getWinnerId());
+                    preparedStatement.executeUpdate();
+                }
+
+                String addParticipants = "INSERT INTO participants VALUES (?, LAST_INSERT_ID());";
+                try (PreparedStatement preparedStatement = connection.prepareStatement(addParticipants)) {
+                    for (Long player : entity.getPlayerIds()) {
+                        preparedStatement.setLong(1, player);
+                        preparedStatement.addBatch();
+                    }
+                    preparedStatement.executeBatch();
+                }
+
+                connection.commit();
+
+            } catch (SQLException e) {
+                connection.rollback();
+                throw new StorageException(e);
+            } finally {
+                connection.setAutoCommit(autoCommit);
+            }
         } catch (SQLException e) {
             throw new StorageException(e);
         }
     }
 
-    public void addPlayerIntoGame(Game entity) throws StorageException{
-        String sql = "INSERT INTO participants (id_games, id_players) VALUE (?, ?)";
-        try(PreparedStatement statement = connectionSupplier.get().prepareStatement(sql)){
-            for (Long aLong : entity.getPlayerIds()) {
-                statement.setLong(1, entity.getId());
-                statement.setLong(2, aLong);
-                statement.executeUpdate();
-            }
-        }catch (SQLException e){
-            throw new StorageException(e);
-        }
-    }
-
-
     @Override
-    public  List<Game> list() throws StorageException {
-        String sql = "SELECT id, id_winner, score, id_players " +
-                "FROM games g INNER JOIN participants p on g.id = p.id_games;";
-        try(PreparedStatement statement = connectionSupplier.get().prepareStatement(sql)){
+    public List<Game> list() throws StorageException {
+        String sql = "SELECT id, id_winner, score, id_players FROM games g INNER JOIN participants p ON g.id = p.id_games";
+        try (PreparedStatement statement = connectionSupplier.get().prepareStatement(sql)) {
             ResultSet resultSet = statement.executeQuery();
-            List<Game>  games = new LinkedList<>();
+            LinkedList<Game> games = new LinkedList<>();
             Long currentId = null;
-            List<Long> players = null;
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Long id = resultSet.getLong("id");
-                if(!id.equals(currentId)){
+                if (!id.equals(currentId)) {
                     currentId = id;
                     Long score = resultSet.getLong("score");
-                    Long winner = resultSet.getLong("id_winner");
-                    players = new LinkedList<>();
-                    games.add(new Game(id, winner, score, players));
+                    Long winnerId = resultSet.getLong("id_winner");
+                    games.add(new Game(currentId, winnerId, score, new LinkedList<>()));
                 }
-                players.add(resultSet.getLong("id_players"));
+                games.getLast().getPlayerIds().add(resultSet.getLong("id_players"));
             }
             return games;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new StorageException(e);
         }
     }
 
     @Override
-    public Game get(Long aLong) throws StorageException {
-        String sql = "SELECT id, id_winner, score, id_players " +
-                "FROM games g INNER JOIN participants p on g.id = p.id_games "+
+    public Game get(Long id) throws StorageException {
+        String sql = "SELECT id, id_winner, score, id_players FROM games g " +
+                "INNER JOIN participants p ON g.id = p.id_games " +
                 "WHERE id = ?";
-        Game game = null;
-        try(PreparedStatement statement = connectionSupplier.get().prepareStatement(sql)){
-            statement.setLong(1, aLong);
+        try (PreparedStatement statement = connectionSupplier.get().prepareStatement(sql)) {
+            statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
-            List<Game>  games = new LinkedList<>();
-            Long currentId = null;
-            List<Long> players = null;
-            while (resultSet.next()){
-                Long id = resultSet.getLong("id");
-                if(!id.equals(currentId)){
-                    currentId = id;
+            Game game = null;
+            while (resultSet.next()) {
+                if (game == null) {
+                    Long gameId = resultSet.getLong("id");
                     Long score = resultSet.getLong("score");
-                    Long winner = resultSet.getLong("id_winner");
-                    players = new LinkedList<>();
-                    game = new Game(id, winner, score, players);
+                    Long winnerId = resultSet.getLong("id_winner");
+                    game = new Game(gameId, winnerId, score, new LinkedList<>());
                 }
-                players.add(resultSet.getLong("id_players"));
+                game.getPlayerIds().add(resultSet.getLong("id_players"));
             }
             return game;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new StorageException(e);
         }
     }
 
     @Override
     public void delete(Game entity) throws StorageException {
-        String sql = "DELETE FROM participants WHERE id_players = ?";
+        String sql = "DELETE FROM games WHERE id = ?";
         try (PreparedStatement statement = connectionSupplier.get().prepareStatement(sql)) {
             statement.setLong(1, entity.getId());
             statement.executeUpdate();
