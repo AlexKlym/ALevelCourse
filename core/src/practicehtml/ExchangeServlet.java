@@ -32,19 +32,9 @@ public class ExchangeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
-        String remoteHost = req.getRemoteHost(); //get ip
 
-        System.out.println("GET from " + remoteHost);
 
-        String parameter = req.getParameter("u");
-
-        String username = Optional
-                .ofNullable(parameter)
-                .orElse("Anonymous");
-
-        String responseBody = respTemple
-                .replace("{username}", username)
-                .replace("{host}", remoteHost);
+        String responseBody = respTemple;
 
         resp.setContentType("text/html");
         resp.setStatus(HttpServletResponse.SC_OK);
