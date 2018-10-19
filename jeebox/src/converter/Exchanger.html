@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+
+        body, html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        #container {
+            height: 100%;
+        }
+
+        #header {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            background-color: bisque;
+            width: 100%;
+            text-align: center;
+        }
+
+        #footer {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            height: 5em;
+            width: 100%;
+            background-color: bisque;
+
+        }
+
+        #content {
+            position: absolute;
+            bottom: 5em;
+            top: 8em;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+
+        }
+
+        .calculate {
+            border: 2px solid limegreen;
+            background-color: limegreen;
+        }
+
+        .calculate:hover {
+            border-color: azure;
+            background-color: aliceblue;
+        }
+
+        .converter * {
+            font-size: inherit;
+            padding: 0.2em;
+            margin: 0.1em 0.2em;
+        }
+
+        .converter input[type="text"], input[type="number"] {
+            border: 2px solid whitesmoke;
+            background-color: whitesmoke;
+        }
+
+        .converter input[type="text"]:hover, input[type="number"]:hover {
+            border-color: limegreen;
+            background-color: limegreen;
+        }
+
+        * {
+            -moz-box-sizing: content-box;
+            -webkit-box-sizing: content-box;
+            box-sizing: content-box;
+        }
+    </style>
+</head>
+<body>
+
+<div id="header">
+    <h1>RATES CONVERTER</h1>
+</div>
+
+<div id="content">
+    <div class="converter" id="convert-usd">
+        <label for="input-usd">USD:</label>
+        <input type="number" class="converter-input" id="input-usd" placeholder="0.00">
+        <input type="button" class="calculate" id="calc-usd" value="Convert">
+        <input type="text" readonly="readonly" class="output" id="output-usd" placeholder="0.00 UAH"/>
+    </div>
+    <div class="converter" id="convert-eur">
+        <label for="input-usd">EUR:</label>
+        <input type="number" class="converter-input" id="input-eur" placeholder="0.00">
+        <input type="button" class="calculate" id="calc-eur" value="Convert">
+        <input type="text" readonly="readonly" class="output" id="output-eur" placeholder="0.00 UAH"/>
+    </div>
+
+
+
+
+
+
+    <div id="footer"></div>
+</div>
+
+<script>
+
+
+        axios.get('http://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11')
+            .then(function (response) {
+                return response.data;
+            })
+            .catch(function (reason) {
+                console.error(reason)
+            });
+
+
+
+
+    function convertUSD(){
+    data.filter(function (value) {
+        return value.ccy === 'USD';
+    }).map(function (value) {
+       return value.buy;
+    })[0]
+
+        .catch(function (reason) {
+            console.error(reason)
+        });
+    }
+
+    function convertEUR() {
+        axios.get('http://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11')
+            .then(function(response) {
+                return response.data;
+
+            }).filter(function (value) {
+            return value.ccy === 'EUR';
+        }).map(function (value) {
+            return value.buy;
+        })[0]
+
+            .catch(function (reason) {
+                console.error(reason)
+            });
+    }
+
+    console.log(convertEUR());
+
+    function calcUSD() {
+        return function () {
+            document.getElementById("output-usd").value = document.getElementById("input-usd").value * convertUSD();
+        };
+
+    }
+
+    function calcEUR() {
+        return function () {
+             document.getElementById("output-eur").value = document.getElementById("input-eur").value * convertEUR();
+    };
+    }
+
+    document.getElementById("calc-usd").addEventListener("click", calcUSD);
+    document.getElementById("calc-eur").addEventListener("click", calcEUR);
+
+
+
+
+</script>
+
+</body>
+</html>

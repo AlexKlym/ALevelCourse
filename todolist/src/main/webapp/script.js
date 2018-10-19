@@ -24,6 +24,8 @@ function setupListeners() {
     document.getElementById('clear').addEventListener('click', function () {
         deleteDone();
     });
+
+
 }
 
 //When page loads, we send GET request to the server
@@ -115,6 +117,8 @@ function addElement(todo) {
         li.classList.toggle('checked');
         todo.done = !todo.done;
     });
+
+
 
     //Add data to the array
     todos.push(todo);

@@ -1,3 +1,6 @@
+package com.alevel.todolist;
+
+import com.alevel.todolist.TodoException;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
