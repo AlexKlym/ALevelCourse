@@ -60,7 +60,7 @@ question.addEventListener('keyup', function (event) {
 
             })
             .catch(function (reason) {
-                if (reason.response.status===500){
+                if (reason.response.status===404){
                     document.getElementById("answer").style.display = "none";
                     myanswer.value="";
                     document.getElementById("myanswer").style.display = "block";

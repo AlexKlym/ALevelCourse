@@ -9,9 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Map;
 
 
-@WebServlet("/qa")
+@WebServlet("/question")
 public class QAServlet extends HttpServlet {
 
     private ObjectMapper objectMapper;
@@ -32,28 +34,29 @@ public class QAServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         String question = req.getParameter("answer");
+
         String answer;
 
         try {
             answer = qaRepository.getAnswer(question);
             System.out.println(question);
-        } catch ( QAException e) {
+        } catch (QAException e) {
             resp.sendError(
                     HttpServletResponse.SC_NOT_FOUND,
                     e.getMessage()
             );
             return;
         }
+        Map<String, String> responseData = Collections.singletonMap("answer", answer);
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.setContentType("application/json;charset=utf8");
-        objectMapper.writeValue(resp.getOutputStream(), answer);
+        objectMapper.writeValue(resp.getOutputStream(), responseData);
 
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         QA qalist = objectMapper.readValue(req.getInputStream(), QA.class);
-        String answer;
         try {
             qaRepository.saveQuestion(qalist);
         } catch (QAException e) {
