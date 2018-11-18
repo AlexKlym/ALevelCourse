@@ -1,1 +1,60 @@
 
+body{
+    margin: 5px;
+    background: skyblue;
+}
+
+h1{
+    margin-top: 0;
+    padding: 0;
+}
+
+input {
+    width: 50%;
+    margin-left: 20%;
+    border: 4px solid black;
+}
+
+
+#header{
+    margin: auto;
+    background: blue;
+    text-align: center;
+    font-size: 30px;
+
+
+}
+
+#search{
+    background: blue;
+    color: black;
+    text-decoration-color: blue;
+    font-family: "Book Antiqua";
+    font-size: 25px;
+    border: 4px solid black;
+
+}
+
+#question {
+
+    color: black;
+    text-decoration-color: blue;
+    font-size: 25px;
+    border: 4px solid black;
+}
+
+#myanswer{
+
+    color: black;
+    text-decoration-color: blue;
+    font-size: 25px;
+}
+
+
+#answer{
+    font-family: "Rage Italic";
+    color: black;
+    text-decoration-color: blue;
+    font-size: 25px;
+}
+
