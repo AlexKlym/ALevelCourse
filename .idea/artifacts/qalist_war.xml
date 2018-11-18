@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="qalist:war">
+    <output-path>$PROJECT_DIR$/qalist/target</output-path>
+    <root id="archive" name="qalist-1.0.war">
+      <element id="artifact" artifact-name="qalist:war exploded" />
+    </root>
+  </artifact>
+</component>

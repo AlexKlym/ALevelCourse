@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="brainfuck:war">
+    <output-path>$PROJECT_DIR$/brainfuck/target</output-path>
+    <root id="archive" name="brainfuck-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="brainfuck:war exploded" />
+    </root>
+  </artifact>
+</component>
